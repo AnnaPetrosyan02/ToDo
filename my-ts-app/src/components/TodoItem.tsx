@@ -8,19 +8,45 @@ interface TodoItemProps {
 }
 
 export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {
-  return (
-    <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "8px" }}>
-      <input
-        type="checkbox"
-        checked={todo.completed}
-        onChange={() => onToggle(todo.id)}
-      />
-      
-      <span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
-        [{todo.priority.toUpperCase()}] {todo.title}
-      </span>
+  // Выбираем название класса для бейджа приоритета
+  const priorityClass = `priority-badge priority-${todo.priority}`;
+  
+  const priorityLabels = {
+    low: "Низкий",
+    medium: "Средний",
+    high: "Срочно"
+  };
 
-      <button onClick={() => onDelete(todo.id)}>Удалить</button>
+  return (
+    <div className="todo-card">
+      <div className="todo-header">
+        <div className="todo-left">
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => onToggle(todo.id)}
+          />
+          <span className={`todo-title ${todo.completed ? "completed" : ""}`}>
+            {todo.title}
+          </span>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span className={priorityClass}>
+            {priorityLabels[todo.priority]}
+          </span>
+          <button className="btn-delete" onClick={() => onDelete(todo.id)}>
+            ✕
+          </button>
+        </div>
+      </div>
+
+      {/* Отображаем заметку, если она была передана */}
+      {todo.description && (
+        <div className="todo-description">
+          {todo.description}
+        </div>
+      )}
     </div>
   );
 };
