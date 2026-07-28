@@ -8,7 +8,6 @@ interface TodoItemProps {
 }
 
 export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) => {
-  // Выбираем название класса для бейджа приоритета
   const priorityClass = `priority-badge priority-${todo.priority}`;
   
   const priorityLabels = {
@@ -41,7 +40,6 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle, onDelete }) 
         </div>
       </div>
 
-      {/* Отображаем заметку, если она была передана */}
       {todo.description && (
         <div className="todo-description">
           {todo.description}
