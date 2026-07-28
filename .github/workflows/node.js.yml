@@ -26,13 +26,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
+          cache-dependency-path: 'my-ts-app/package-lock.json' # Указываем путь к lock-файлу
 
       - name: Install dependencies
+        working-directory: ./my-ts-app # Указываем рабочий каталог для команды
         run: npm ci
 
       - name: Build
+        working-directory: ./my-ts-app # Указываем рабочий каталог для билда
         run: npm run build
 
       - name: Setup Pages
@@ -41,7 +44,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Vite собирает проект именно в папку dist
+          path: './my-ts-app/dist' # Указываем путь к папке dist внутри my-ts-app
 
       - name: Deploy to GitHub Pages
         id: deployment
